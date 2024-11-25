@@ -1,0 +1,24 @@
+{
+  "messages": [
+    {
+      "subject": "Votre compte bancaire a été compromis",
+      "body": "Cher(e) client(e), nous avons détecté une activité suspecte sur votre compte. Veuillez vérifier vos informations immédiatement en cliquant sur le lien suivant : http://fakebank.com/verification."
+    },
+    {
+      "subject": "Félicitations ! Vous avez gagné un prix",
+      "body": "Bonjour, vous avez été sélectionné(e) pour recevoir un prix exclusif. Cliquez ici pour réclamer votre récompense : http://fakeprize.com/winner."
+    },
+    {
+      "subject": "Problème de livraison avec votre colis",
+      "body": "Bonjour, nous n'avons pas pu livrer votre colis en raison d'une adresse incorrecte. Veuillez confirmer vos informations ici : http://fakeshipping.com/track."
+    },
+    {
+      "subject": "Mise à jour de sécurité nécessaire",
+      "body": "Cher(e) utilisateur(trice), une mise à jour critique de votre compte est nécessaire pour éviter la suspension. Connectez-vous ici pour mettre à jour vos informations : http://fakesecurity.com/update."
+    },
+    {
+      "subject": "Alerte : Connexion inhabituelle détectée",
+      "body": "Bonjour, une connexion inhabituelle a été détectée sur votre compte. Si ce n'était pas vous, sécurisez votre compte immédiatement en suivant ce lien : http://fakelogin.com/security."
+    }
+  ]
+}
