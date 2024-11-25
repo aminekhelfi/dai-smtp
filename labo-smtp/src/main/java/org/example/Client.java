@@ -1,3 +1,5 @@
+package org.example;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -9,6 +11,8 @@ import java.util.regex.Pattern;
 
 
 public class Client {
+
+    /*
     final String smtpServer = "localhost";
     final int port = 5000;
 
@@ -19,18 +23,7 @@ public class Client {
     }
 
     // Méthode privée pour vérifier le format des adresses e-mail
-    private boolean checkEmailFormat(List<String> emailAddresses) {
-        // Expression régulière pour valider le format des adresses e-mail
-        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
-        Pattern pattern = Pattern.compile(emailRegex);
 
-        for (String email : emailAddresses) {
-            if (!pattern.matcher(email).matches()) {
-                return false; // Retourne faux si une adresse e-mail est invalide
-            }
-        }
-        return true; // Retourne vrai si toutes les adresses e-mail sont valides
-    }
 
     private class Message {
 
@@ -87,4 +80,6 @@ public class Client {
             System.err.println("Client error: " + e.getMessage());
         }
     }
+
+     */
 }

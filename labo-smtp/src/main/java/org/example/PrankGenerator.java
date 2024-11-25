@@ -2,6 +2,8 @@ package org.example;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Pattern;
+
 import static org.example.json_reader.readJsonFile;
 
 public class PrankGenerator {
@@ -9,10 +11,35 @@ public class PrankGenerator {
     private List<String> messages;
     private SmtpClient smtpClient;
 
-    public PrankGenerator() throws IOException {
-        this.victims = readJsonFile("files/email.json","emails");
+    public PrankGenerator(int nbgroupe) throws IOException {
+        if(checkEmailFormat(readJsonFile("files/email.json","emails")))
+        {
+            this.victims = readJsonFile("files/email.json","emails");
+        }
+        else {
+            System.out.println("Email format is incorrect");
+            return;
+        }
+
         this.messages = readJsonFile("files/fishing_messages.json","messages");
         this.smtpClient = new SmtpClient("localhost", 1025); // Adresse et port du serveur SMTP
+
+
+        generateAndSendPranks(nbgroupe);
+    }
+
+
+    private boolean checkEmailFormat(List<String> emailAddresses) {
+        // Expression régulière pour valider le format des adresses e-mail
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        for (String email : emailAddresses) {
+            if (!pattern.matcher(email).matches()) {
+                return false; // Retourne faux si une adresse e-mail est invalide
+            }
+        }
+        return true; // Retourne vrai si toutes les adresses e-mail sont valides
     }
 
     public void generateAndSendPranks(int groupCount) throws IOException {
