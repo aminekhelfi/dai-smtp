@@ -15,51 +15,57 @@ public class SmtpClient {
     }
 
     public void sendEmail(String sender, List<String> recipients, String message) throws IOException {
-        try (Socket socket = new Socket(smtpServer, port);
-             BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
-             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8))) {
 
+        try (Socket socket = new Socket(smtpServer, port);
+             var in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+             var out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8))) {
+
+            System.out.println("Connected to the server at " + smtpServer + ":" + port);
 
             for (String email : recipients) {
-
                 try {
-
-
-                    // Read server response
                     System.out.println("Response: " + in.readLine());
-
-                    // Send HELO command
-                    out.write("HELO " + smtpServer);
+                    out.write("ehlo " + smtpServer + "\n");
+                    out.flush();
                     System.out.println("Response: " + in.readLine());
-
-                    // Send MAIL FROM command
-                    out.write("MAIL FROM:<" + sender + ">");
                     System.out.println("Response: " + in.readLine());
-
-                    // Send RCPT TO command
-                    out.write("RCPT TO:<" + recipients + ">");
                     System.out.println("Response: " + in.readLine());
-
-                    // Send DATA command
-                    out.write("DATA");
                     System.out.println("Response: " + in.readLine());
-
-                    // Send email headers and body
-                    out.write("Subject: ");
+                    out.write("mail from:" + "<" + sender + ">" + "\n");
+                    out.flush();
+                    System.out.println("Response: " + in.readLine());
+                    out.write("rcpt to:" + "<" + email + ">" + "\n");
+                    out.flush();
+                    System.out.println("Response: " + in.readLine());
+                    out.write("data" + "\n");
+                    out.flush();
+                    System.out.println("Response: " + in.readLine());
+                    out.write("From:" + "<" + sender + ">" + "\n");
+                    out.flush();
+                    out.write("To:" + "<" + email + ">" + "\n");
+                    out.flush();
+                    out.write("Date:" + "April, 1st, 2026" + "\n");
+                    out.flush();
+                    out.write("Subjet:" + "?" + "\n");
+                    out.flush();
                     out.write("\n");
-                    out.write(message);
-                    out.write(".");
+                    out.flush();
+                    out.write(message + "\n");
+                    out.flush();
+                    out.write(" \n");
+                    out.flush();
+                    out.write("\r\n" + "." + "\r\n");
+                    out.flush();
                     System.out.println("Response: " + in.readLine());
-
-                    // Send QUIT command
-                    out.write("QUIT");
+                    out.write("quit" + "\n");
+                    out.flush();
                     System.out.println("Response: " + in.readLine());
-
-                } catch (Exception e) {
+                }
+                catch (Exception e) {
                     System.err.println("Erreur lors de l'envoi : " + e.getMessage());
-
                 }
             }
         }
     }
 }
+

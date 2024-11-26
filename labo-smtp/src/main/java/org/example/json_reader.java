@@ -36,7 +36,7 @@ public class json_reader {
                     JSONObject messageObject = messageArray.getJSONObject(i);
                     String subject = messageObject.getString("subject");
                     String body = messageObject.getString("body");
-                    result.add("Sujet: " + subject + "\nCorps: " + body);
+                    result.add("Subject: " + subject + "\n\nBody: " + body);
                 }
             } else {
                 System.err.println("Clé inconnue : " + key);
