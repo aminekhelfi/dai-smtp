@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 import static org.example.json_reader.readJsonFile;
 
 public class PrankGenerator {
-    private List<String> victims;
-    private List<String> messages;
+    private List<List<String>> victims;
+    private List<List<String>> messages;
     private SmtpClient smtpClient;
 
     public PrankGenerator(int nbgroupe) throws IOException {
@@ -29,12 +29,12 @@ public class PrankGenerator {
     }
 
 
-    private boolean checkEmailFormat(List<String> emailAddresses) {
+    private boolean checkEmailFormat(List<List<String>> emailAddresses) {
         // Expression régulière pour valider le format des adresses e-mail
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
         Pattern pattern = Pattern.compile(emailRegex);
 
-        for (String email : emailAddresses) {
+        for (String email : emailAddresses.get(0)) {
             if (!pattern.matcher(email).matches()) {
                 return false; // Retourne faux si une adresse e-mail est invalide
             }
@@ -50,9 +50,9 @@ public class PrankGenerator {
         Collections.shuffle(victims); // Mélange les victimes
         List<Group> groups = createGroups(groupCount); //créer les groupe
 
-        for (Group group : groups) {
-            String message = getRandomMessage();
-            smtpClient.sendEmail(group.getSender(), group.getRecipients(), message);
+        for (int i = 0; i< groups.size(); i++) {
+            List<String> message = getRandomMessage();
+            smtpClient.sendEmail(groups.get(i).getSender(), groups.get(i).getRecipients(), message);
         }
     }
 
@@ -63,11 +63,11 @@ public class PrankGenerator {
         for (int i = 0; i < groupCount; i++) {
             int start = i * groupSize;
             int end = Math.min(start + groupSize, victims.size());
-            List<String> groupMembers = victims.subList(start, end);
+            List<List<String>> groupMembers = victims.subList(start, end);
 
             if (groupMembers.size() > 1) {
-                String sender = groupMembers.get(0);
-                List<String> recipients = groupMembers.subList(1, groupMembers.size());
+                String sender = groupMembers.get(0).get(0);
+                List<String> recipients = groupMembers.subList(1, groupMembers.size()).get(0);
                 groups.add(new Group(sender, recipients));
             }
         }
@@ -75,7 +75,7 @@ public class PrankGenerator {
         return groups;
     }
 
-    private String getRandomMessage() {
+    private List<String> getRandomMessage() {
         return messages.get(new Random().nextInt(messages.size()));
     }
 

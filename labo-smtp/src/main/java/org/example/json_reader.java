@@ -4,16 +4,15 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.*;
 
-
-//sers à lire les fichier json
 public class json_reader {
 
-
-    public static List<String> readJsonFile(String filePath, String key) {
-        List<String> result = new ArrayList<>();
+    public static List<List<String>> readJsonFile(String filePath, String key) {
+        List<List<String>> result = new ArrayList<>();
 
         try {
             // Lire le contenu du fichier JSON
@@ -27,7 +26,9 @@ public class json_reader {
                 // Si la clé est "emails", extraire un tableau simple
                 JSONArray emailArray = jsonObject.getJSONArray(key);
                 for (int i = 0; i < emailArray.length(); i++) {
-                    result.add(emailArray.getString(i));
+                    List<String> email = new ArrayList<>();
+                    email.add(emailArray.getString(i));
+                    result.add(email);
                 }
             } else if (key.equals("messages")) {
                 // Si la clé est "messages", extraire les sujets et corps
@@ -36,7 +37,10 @@ public class json_reader {
                     JSONObject messageObject = messageArray.getJSONObject(i);
                     String subject = messageObject.getString("subject");
                     String body = messageObject.getString("body");
-                    result.add("Subject: " + subject + "\n\nBody: " + body);
+                    List<String> message = new ArrayList<>();
+                    message.add(subject);
+                    message.add(body);
+                    result.add(message);
                 }
             } else {
                 System.err.println("Clé inconnue : " + key);
@@ -48,33 +52,4 @@ public class json_reader {
         return result;
     }
 
-
-    public static void reader(String json_file, String row) {
-        try {
-            // Lire le contenu du fichier JSON
-            String content = new String(Files.readAllBytes(Paths.get(json_file)));
-
-            // Convertir le contenu en un objet JSON
-            JSONObject jsonObject = new JSONObject(content);
-
-            // Extraire la liste des e-mails
-            JSONArray emailArray = jsonObject.getJSONArray(row);
-
-            // Convertir le JSONArray en une List<String>
-            List<String> emailList = new ArrayList<>();
-            for (int i = 0; i < emailArray.length(); i++) {
-                emailList.add(emailArray.getString(i));
-            }
-
-            for(String email : emailList) {
-                System.out.println(email);
-            }
-
-
-        } catch (IOException e) {
-            System.err.println("Erreur lors de la lecture du fichier : " + e.getMessage());
-        } catch (JSONException e) {
-            System.err.println("Erreur lors de la lecture du JSON : " + e.getMessage());
-        }
-    }
 }

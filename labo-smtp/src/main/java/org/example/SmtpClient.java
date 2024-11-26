@@ -14,7 +14,7 @@ public class SmtpClient {
         this.port = port;
     }
 
-    public void sendEmail(String sender, List<String> recipients, String message) throws IOException {
+    public void sendEmail(String sender, List<String> recipients, List<String> message) throws IOException {
 
         try (Socket socket = new Socket(smtpServer, port);
              var in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
@@ -44,13 +44,13 @@ public class SmtpClient {
                     out.flush();
                     out.write("To:" + "<" + email + ">" + "\n");
                     out.flush();
-                    out.write("Date:" + "April, 1st, 2026" + "\n");
+                    out.write("Date:" + "01.03.2026" + "\n");
                     out.flush();
-                    out.write("Subjet:" + "?" + "\n");
+                    out.write("Subject:" + message.getFirst() + "\n");
                     out.flush();
                     out.write("\n");
                     out.flush();
-                    out.write(message + "\n");
+                    out.write(message.get(1) + "\n");
                     out.flush();
                     out.write(" \n");
                     out.flush();
