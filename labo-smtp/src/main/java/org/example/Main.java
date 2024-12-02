@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         PrankGenerator prank=new PrankGenerator(5);
-        prank.generateAndSendPranks(3);
+        prank.generateAndSendPranks(5);
 
         /*test
         List<String> test = new ArrayList<>();
