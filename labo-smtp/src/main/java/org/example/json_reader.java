@@ -51,5 +51,4 @@ public class json_reader {
 
         return result;
     }
-
 }
