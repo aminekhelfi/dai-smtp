@@ -7,13 +7,17 @@ import java.util.regex.Pattern;
 import static org.example.json_reader.readJsonFile;
 
 public class PrankGenerator {
-    private List<List<String>> victims;
-    private List<List<String>> messages;
+    private List<String> victims;
+    private List<String> messages;
     private SmtpClient smtpClient;
+    private int nbGroupe;
+    private int nbAddrMail;
 
-    public PrankGenerator(int nbgroupe) throws IOException {
+    //prend en paramètre le nombre de groupe donc le nombre de mails qui seront envoyés
+    public PrankGenerator(int nbgroupe, int nbAddrMail) throws IOException {
         if(checkEmailFormat(readJsonFile("files/email.json","emails")))
         {
+            //liste tout les mail
             this.victims = readJsonFile("files/email.json","emails");
         }
         else {
@@ -21,20 +25,29 @@ public class PrankGenerator {
             return;
         }
 
+        //liste tout les sujet (idx paire) et tout les corps (idx impaire)
         this.messages = readJsonFile("files/fishing_messages.json","messages");
+
         this.smtpClient = new SmtpClient("localhost", 1025); // Adresse et port du serveur SMTP
 
+        this.nbGroupe = nbgroupe;
 
-        generateAndSendPranks(nbgroupe);
+        //si il y a 10 victimes dans la liste de mails, les groupes peuvent être composer de 2 à 5 addresse(s)
+        if (nbAddrMail < 2 || nbAddrMail > victims.size() / 2) {
+            throw new IllegalArgumentException("Nombre de groupes invalide !");
+        }
+
+        this.nbAddrMail = nbAddrMail;
+
     }
 
 
-    private boolean checkEmailFormat(List<List<String>> emailAddresses) {
+    private boolean checkEmailFormat(List<String> emailAddresses) {
         // Expression régulière pour valider le format des adresses e-mail
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
         Pattern pattern = Pattern.compile(emailRegex);
 
-        for (String email : emailAddresses.get(0)) {
+        for (String email : emailAddresses) {
             if (!pattern.matcher(email).matches()) {
                 return false; // Retourne faux si une adresse e-mail est invalide
             }
@@ -42,53 +55,49 @@ public class PrankGenerator {
         return true; // Retourne vrai si toutes les adresses e-mail sont valides
     }
 
-    public void generateAndSendPranks(int groupCount) throws IOException {
-        if (groupCount < 1 || groupCount > victims.size() / 2) {
-            throw new IllegalArgumentException("Nombre de groupes invalide !");
+    //groupCount est le nombre d'addresse mail qu'il y a dans le groupe
+    public void generateAndSendPranks() throws IOException {
+
+        for(int i = 0; i < nbGroupe; i++) {
+
+            Group group = createGroup(nbAddrMail);
+            smtpClient.sendEmail(group.getSender(), group.getRecipients(), group.getMessage());
+
         }
 
-        Collections.shuffle(victims); // Mélange les victimes
-        List<Group> groups = createGroups(groupCount); //créer les groupe
-
-        for (int i = 0; i< groups.size(); i++) {
-            List<String> message = getRandomMessage();
-            smtpClient.sendEmail(groups.get(i).getSender(), groups.get(i).getRecipients(), message);
-        }
     }
 
-    private List<Group> createGroups(int groupCount) {
-        List<Group> groups = new ArrayList<>();
-        int groupSize = victims.size() / groupCount;
+    private Group createGroup(int nbAddrMail) {
 
-        for (int i = 0; i < groupCount; i++) {
-            int start = i * groupSize;
-            int end = Math.min(start + groupSize, victims.size());
-            List<List<String>> groupMembers = victims.subList(start, end);
+        Collections.shuffle(victims); // Mélange les victimes
+        List<String> receiver = new ArrayList<>();
 
-            if (groupMembers.size() > 1) {
-                String sender = groupMembers.get(0).get(0);
-                List<String> recipients = groupMembers.subList(1, groupMembers.size()).get(0);
-                groups.add(new Group(sender, recipients));
-            }
+        for(int i = 1; i < nbAddrMail; i++) {
+
+            receiver.add(victims.get(i));
+
         }
 
-        return groups;
+        return  new Group(victims.getFirst(), receiver, getRandomMessage());
+
     }
 
     private List<String> getRandomMessage() {
-        return messages.get(new Random().nextInt(messages.size()));
-    }
 
-    private List<String> loadFile(String filePath) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(filePath));
-        List<String> lines = new ArrayList<>();
-        String line;
+        //la fonction retourne dans une liste de string un message avec son sujet en firt et son corp en last
 
-        while ((line = reader.readLine()) != null) {
-            lines.add(line.trim());
+        List<String> message = new ArrayList<>();
+        int idx = new Random().nextInt(messages.size());
+        if (idx % 2 == 0) {//si paire -> on a le sujet et le corp est à idx +1
+            message.add(messages.get(idx));
+            message.add(messages.get(idx + 1));
+        } else//si impaire -> on a le corps et le sujet est à idx -1
+        {
+            message.add(messages.get(idx - 1));
+            message.add(messages.get(idx));
         }
-        reader.close();
-        return lines;
+
+        return message;
     }
 }
 

@@ -11,8 +11,8 @@ import org.json.*;
 
 public class json_reader {
 
-    public static List<List<String>> readJsonFile(String filePath, String key) {
-        List<List<String>> result = new ArrayList<>();
+    public static List<String> readJsonFile(String filePath, String key) {
+        List<String> result = new ArrayList<>();
 
         try {
             // Lire le contenu du fichier JSON
@@ -28,7 +28,7 @@ public class json_reader {
                 for (int i = 0; i < emailArray.length(); i++) {
                     List<String> email = new ArrayList<>();
                     email.add(emailArray.getString(i));
-                    result.add(email);
+                    result.addAll(email);
                 }
             } else if (key.equals("messages")) {
                 // Si la clé est "messages", extraire les sujets et corps
@@ -40,9 +40,10 @@ public class json_reader {
                     List<String> message = new ArrayList<>();
                     message.add(subject);
                     message.add(body);
-                    result.add(message);
+                    result.addAll(message);//ajoute tout les éléments dans results (corp + sujet) de tout les message
                 }
-            } else {
+            }
+            else {
                 System.err.println("Clé inconnue : " + key);
             }
         } catch (Exception e) {
