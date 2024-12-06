@@ -30,6 +30,7 @@ public class Main {
         PrankGenerator prank = new PrankGenerator(numberOfPranks,3); //a passer en paramètre
         prank.generateAndSendPranks();
 
+
     }
 }
 
