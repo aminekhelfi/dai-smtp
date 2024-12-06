@@ -85,6 +85,6 @@ Voici un exemple de dialogue entre le client et le serveur SMTP lors de l'envoi 
 >
 >Pour que les caractères spéciaux soient pris en compte, il faut ajouter `Content-Type: text/plain; charset=UTF-8\r\n`.
 
-Résultat :
+**Résultat :**
 
 ![mail](mail_recu.jpg "Titre de l'image")
