@@ -90,6 +90,13 @@ class PrankGenerator {
 
 `Group` : Cette classe représente un groupe de victimes avec un expéditeur, des destinataires et un message.
 
+**Les autres classes du codes :**
+
+`json_reader` : Cette classe lis les adresses et les messages et les met dans des listes de String.
+
+`Main` : Cette classe est la classe principale qui traitre les argument et créer le prank et appel sa fonction pour l'envoyer.
+
+
 ### Exemple de Dialogue entre le Client et le Serveur SMTP :
 
 Voici un exemple de dialogue entre le client et le serveur SMTP lors de l'envoi d'un e-mail (avec un seul destinataire) :
