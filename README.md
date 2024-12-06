@@ -63,9 +63,9 @@ class PrankGenerator {
         - String smtpServer
         - int port
         + SmtpClient(String smtpServer, int port)
-        + sendEmail(String sender, List<String> recipients, List<String> message): void
-        - getActualDate(): String
-        - connexionServeurSMTP(BufferedReader in,BufferedWriter out, String sender, List<String> receiver): void
+        + sendEmail(String sender, List<String> recipients, List<String> message) void
+        - getActualDate() String
+        - connexionServeurSMTP(BufferedReader in,BufferedWriter out, String sender, List<String> receiver) void
     }
 
     class Group {
@@ -73,9 +73,9 @@ class PrankGenerator {
         - List<String> recipients
         - List<String> message
         + Group(String sender, List<String> recipients, List<String> message)
-        + getSender(): String
-        + getRecipients(): List<String>
-        + etMessage(): List<String>
+        + getSender() String
+        + getRecipients() List<String>
+        + etMessage() List<String>
     }
 
     PrankGenerator --> SmtpClient
