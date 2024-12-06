@@ -12,9 +12,9 @@ Configuration du Serveur SMTP Fictif
 Pour tester notre application sans envoyer de vrais e-mails, nous pouvons utiliser MailDev comme serveur SMTP fictif. Voici comment le configurer :
 
  - Docker doit être installé sur la machine
- - Démarrer MailDev 
+ - MailDev doit être démarré 
  
--> Utilisez la commande suivante pour démarrer MailDev :
+=> Utilisez la commande suivante pour démarrer MailDev :
 
     docker run -d -p 1080:1080 -p 1025:1025 maildev/maildev
 
@@ -25,9 +25,9 @@ Configuration et Exécution de l'Outil
 
 **1. Cloner le dépôt : Clonez le dépôt GitHub contenant le code source de l'application.**
 
-        git clone <URL_DU_DEPOT> 
-        cd <NOM_DU_DEPOT>
-**2. Configurer les fichiers : Modifiez les fichiers de configuration pour inclure vos adresses e-mail et messages.**
+        git clone https://github.com/aminekhelfi/dai-smtp.git 
+        cd .\dai-smtp\ 
+**2. Configurer les fichiers : Modifier les fichiers de configuration pour inclure d'autres adresses e-mail et messages.**
 
 `files/email.json` : Contient la liste des adresses e-mail.
 
@@ -90,11 +90,11 @@ class PrankGenerator {
 
 `Group` : Cette classe représente un groupe de victimes avec un expéditeur, des destinataires et un message.
 
-**Les autres classes du codes :**
+**Les autres classes du code :**
 
-`json_reader` : Cette classe lis les adresses et les messages et les met dans des listes de String.
+`json_reader` : Cette classe lit les adresses et les messages et les met dans des listes de String.
 
-`Main` : Cette classe est la classe principale qui traitre les argument et créer le prank et appel sa fonction pour l'envoyer.
+`Main` : Cette classe est la classe principale qui traite les arguments et créer le prank et appelle sa fonction pour l'envoyer.
 
 
 ### Exemple de Dialogue entre le Client et le Serveur SMTP :
@@ -126,7 +126,7 @@ Voici un exemple de dialogue entre le client et le serveur SMTP lors de l'envoi 
 
 >Note : 
 > 
->Chaque envoys du client est termineé par un `\n` et pour quitter le message, le client doit envoyé `\r\n . \r\n `.
+>Chaque envois du client est termineé par un `\n` et pour quitter le message, le client doit envoyé `\r\n . \r\n `.
 >
 >Pour que les caractères spéciaux soient pris en compte, il faut ajouter `Content-Type: text/plain; charset=UTF-8\r\n`.
 
