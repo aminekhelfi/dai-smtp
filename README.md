@@ -47,29 +47,35 @@ Description de l'Implémentation
 ```mermaid
 classDiagram
 class PrankGenerator {
-- List<List<String>> victims
-- List<List<String>> messages
+- List<String> victims
+- List<String> messages
 - SmtpClient smtpClient
-+ PrankGenerator(int nbgroupe)
-+ generateAndSendPranks(int groupCount)
-- checkEmailFormat(List<List<String>> emailAddresses): boolean
-- createGroups(int groupCount): List<Group>
+- int nbGroupe
+- int nbAddrMail
++ PrankGenerator(int nbgroupe, int nbAddrMail)
++ generateAndSendPranks(): void
+- checkEmailFormat(List<String> emailAddresses): boolean 
+- createGroup(int nbAddrMail): Group
 - getRandomMessage(): List<String>
 }
 
     class SmtpClient {
         - String smtpServer
-        - int smtpPort
-        + SmtpClient(String smtpServer, int smtpPort)
+        - int port
+        + SmtpClient(String smtpServer, int port)
         + sendEmail(String sender, List<String> recipients, List<String> message): void
+        - getActualDate(): String
+        - connexionServeurSMTP(BufferedReader in,BufferedWriter out, String sender, List<String> receiver): void
     }
 
     class Group {
         - String sender
         - List<String> recipients
-        + Group(String sender, List<String> recipients)
+        - List<String> message
+        + Group(String sender, List<String> recipients, List<String> message)
         + getSender(): String
         + getRecipients(): List<String>
+        + etMessage(): List<String>
     }
 
     PrankGenerator --> SmtpClient
