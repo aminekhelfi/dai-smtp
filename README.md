@@ -87,4 +87,4 @@ Voici un exemple de dialogue entre le client et le serveur SMTP lors de l'envoi 
 
 Résultat :
 
-![Resultat :]([mail_recu.png](mail_recu.png))
+![mail](mail_recu.jpg "Titre de l'image")
