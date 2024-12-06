@@ -53,10 +53,10 @@ class PrankGenerator {
 - int nbGroupe
 - int nbAddrMail
 + PrankGenerator(int nbgroupe, int nbAddrMail)
-+ generateAndSendPranks(): void
-- checkEmailFormat(List<String> emailAddresses): boolean 
-- createGroup(int nbAddrMail): Group
-- getRandomMessage(): List<String>
++ generateAndSendPranks() void
+- checkEmailFormat(List<String> emailAddresses) boolean 
+- createGroup(int nbAddrMail) Group
+- getRandomMessage() List<String>
 }
 
     class SmtpClient {
