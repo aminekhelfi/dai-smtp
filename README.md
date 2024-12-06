@@ -44,6 +44,38 @@ Description de l'Implémentation
 
 ### Diagramme de Classes :
 
+```mermaid
+classDiagram
+class PrankGenerator {
+- List<List<String>> victims
+- List<List<String>> messages
+- SmtpClient smtpClient
++ PrankGenerator(int nbgroupe)
++ generateAndSendPranks(int groupCount)
+- checkEmailFormat(List<List<String>> emailAddresses): boolean
+- createGroups(int groupCount): List<Group>
+- getRandomMessage(): List<String>
+}
+
+    class SmtpClient {
+        - String smtpServer
+        - int smtpPort
+        + SmtpClient(String smtpServer, int smtpPort)
+        + sendEmail(String sender, List<String> recipients, List<String> message): void
+    }
+
+    class Group {
+        - String sender
+        - List<String> recipients
+        + Group(String sender, List<String> recipients)
+        + getSender(): String
+        + getRecipients(): List<String>
+    }
+
+    PrankGenerator --> SmtpClient
+    PrankGenerator --> Group
+```
+
 **Classes Principales**
 
 `PrankGenerator` : Cette classe est responsable de la génération et de l'envoi des farces. Elle lit les fichiers de configuration, valide les adresses e-mail, crée les groupes et envoie les e-mails.
