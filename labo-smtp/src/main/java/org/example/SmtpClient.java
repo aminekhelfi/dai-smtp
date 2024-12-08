@@ -52,20 +52,20 @@ public class SmtpClient {
     {
         try
         {
-            System.out.println("Response: " + in.readLine());
+            System.out.println("Serveur : " + in.readLine());
             out.write("ehlo " + smtpServer + "\n");
             out.flush();
             String r;
             while ((r = in.readLine()) != null && r.contains("r")) {
-                System.out.println("Response: " + r);
+                System.out.println("Serveur : " + r);
             }
             out.write("mail from:" + "<" + sender + ">" + "\n");
             out.flush();
-            System.out.println("Response: " + in.readLine());
+            System.out.println("Serveur : " + in.readLine());
             for(int i = 0; i <receiver.size(); i++) {
                 out.write("rcpt to:" + "<" + receiver.get(i) + ">" + "\n");
                 out.flush();
-                System.out.println("Response: " + in.readLine());
+                System.out.println("Serveur : " + in.readLine());
             }
         }
         catch (Exception e) {
@@ -97,7 +97,7 @@ public class SmtpClient {
 
                 out.write("data" + "\n");
                 out.flush();
-                System.out.println("Response: " + in.readLine());
+                System.out.println("Serveur : " + in.readLine());
                 out.write("From:" + "<" + sender + ">" + "\n");
                 out.flush();
                 for(int i = 0; i <recipients.size(); i++) {
@@ -118,10 +118,10 @@ public class SmtpClient {
                 out.flush();
                 out.write("\r\n" + "." + "\r\n");
                 out.flush();
-                System.out.println("Response: " + in.readLine());
+                System.out.println("Serveur : " + in.readLine());
                 out.write("quit" + "\n");
                 out.flush();
-                System.out.println("Response: " + in.readLine());
+                System.out.println("Serveur : " + in.readLine());
             }
             catch (Exception e) {
                 System.err.println("Erreur lors de l'envoi : " + e.getMessage());

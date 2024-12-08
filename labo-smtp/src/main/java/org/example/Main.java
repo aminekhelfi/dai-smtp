@@ -3,7 +3,7 @@ import java.io.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class main {
+public class Main {
     public static void main(String[] args) throws IOException {
 
         if (args.length < 1) {
@@ -22,7 +22,7 @@ public class main {
             return;
         }
 
-        PrankGenerator prank = new PrankGenerator(numberOfPranks,3); //a passer en paramètre
+        PrankGenerator prank = new PrankGenerator(numberOfPranks,3);
         prank.generateAndSendPranks();
     }
 }
