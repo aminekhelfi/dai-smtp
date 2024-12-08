@@ -6,19 +6,30 @@ import java.util.regex.Pattern;
 
 import static org.example.json_reader.readJsonFile;
 
+/**
+ * Classe responsable de la génération et de l'envoi d'emails de farce
+ * Gère les groupes de victimes, les messages d'email et le processus d'envoi
+ */
 public class PrankGenerator {
     private List<String> victims;
     private List<String> messages;
     private SmtpClient smtpClient;
     private int nbGroupe;
     private int nbAddrMail;
+    private final String victims_email="files/email.json";
+    private final String messages_email="files/fishing_messages.json";
 
-    //prend en paramètre le nombre de groupe donc le nombre de mails qui seront envoyés
+    /**
+     * Constructeur de PrankGenerator
+     * @param nbgroupe Nombre de groupes à créer (nombre d'emails à envoyer)
+     * @param nbAddrMail Nombre d'adresses email par groupe
+     * @throws IOException En cas d'erreur lors de la lecture des fichiers d'email ou de messages
+     */
     public PrankGenerator(int nbgroupe, int nbAddrMail) throws IOException {
-        if(checkEmailFormat(readJsonFile("files/email.json","emails")))
+        if(checkEmailFormat(readJsonFile(victims_email,"emails")))
         {
             //liste tout les mail
-            this.victims = readJsonFile("files/email.json","emails");
+            this.victims = readJsonFile(victims_email,"emails");
         }
         else {
             System.out.println("Email format is incorrect");
@@ -26,7 +37,7 @@ public class PrankGenerator {
         }
 
         //liste tout les sujet (idx paire) et tout les corps (idx impaire)
-        this.messages = readJsonFile("files/fishing_messages.json","messages");
+        this.messages = readJsonFile(messages_email,"messages");
 
         this.smtpClient = new SmtpClient("localhost", 1025); // Adresse et port du serveur SMTP
 
@@ -42,6 +53,11 @@ public class PrankGenerator {
     }
 
 
+    /**
+     * Valide le format des adresses email
+     * @param emailAddresses Liste des adresses email à valider
+     * @return vrai si toutes les adresses email sont valides, faux sinon
+     */
     private boolean checkEmailFormat(List<String> emailAddresses) {
         // Expression régulière pour valider le format des adresses e-mail
         String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
@@ -55,7 +71,10 @@ public class PrankGenerator {
         return true; // Retourne vrai si toutes les adresses e-mail sont valides
     }
 
-    //groupCount est le nombre d'addresse mail qu'il y a dans le groupe
+    /**
+     * Génère et envoie des emails de farce à tous les groupes
+     * @throws IOException En cas d'erreur lors de l'envoi des emails
+     */
     public void generateAndSendPranks() throws IOException {
 
         for(int i = 0; i < nbGroupe; i++) {
@@ -67,6 +86,11 @@ public class PrankGenerator {
 
     }
 
+    /**
+     * Crée un groupe avec un nombre spécifié d'adresses email
+     * @param nbAddrMail Nombre d'adresses email à inclure dans le groupe
+     * @return Un nouvel objet Group contenant l'expéditeur et les destinataires
+     */
     private Group createGroup(int nbAddrMail) {
 
         Collections.shuffle(victims); // Mélange les victimes
@@ -78,10 +102,14 @@ public class PrankGenerator {
 
         }
 
-        return  new Group(victims.getFirst(), receiver, getRandomMessage());
+        return  new Group(victims.get(0), receiver, getRandomMessage());
 
     }
 
+    /**
+     * Sélectionne un message aléatoire parmi les messages disponibles
+     * @return Liste contenant le sujet (index 0) et le corps (index 1) du message
+     */
     private List<String> getRandomMessage() {
 
         //la fonction retourne dans une liste de string un message avec son sujet en firt et son corp en last
@@ -100,4 +128,3 @@ public class PrankGenerator {
         return message;
     }
 }
-

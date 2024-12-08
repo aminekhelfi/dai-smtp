@@ -1,14 +1,9 @@
-package org.example;//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+package org.example;
 import java.io.*;
-import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
-
-
-
-public class Main {
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+public class main {
     public static void main(String[] args) throws IOException {
 
         if (args.length < 1) {
@@ -29,9 +24,5 @@ public class Main {
 
         PrankGenerator prank = new PrankGenerator(numberOfPranks,3); //a passer en paramètre
         prank.generateAndSendPranks();
-
-
     }
 }
-
-

@@ -1,16 +1,23 @@
 package org.example;
 
-import java.io.*;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.json.*;
 
+/**
+ * Classe utilitaire pour la lecture de fichiers JSON
+ * Permet de lire des fichiers contenant des listes d'emails ou de messages
+ */
 public class json_reader {
 
+    /**
+     * Lit un fichier JSON et extrait les données selon la clé spécifiée
+     * @param filePath Chemin du fichier JSON à lire
+     * @param key Clé à extraire ("emails" pour les adresses email ou "messages" pour les messages)
+     * @return Liste de chaînes contenant soit les emails, soit les messages (sujet + corps)
+     */
     public static List<String> readJsonFile(String filePath, String key) {
         List<String> result = new ArrayList<>();
 
