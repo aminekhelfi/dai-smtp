@@ -5,6 +5,8 @@ import java.io.*;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) throws IOException {
+        // "../" compiler avec maven
+        // pour compiler depuis l'IDE, enlenver "../"
         final String victims_email="../files/email.json";
         final String messages_email="../files/fishing_messages.json";
 
