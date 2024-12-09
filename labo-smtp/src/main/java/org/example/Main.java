@@ -5,6 +5,8 @@ import java.io.*;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) throws IOException {
+        final String victims_email="../files/email.json";
+        final String messages_email="../files/fishing_messages.json";
 
         if (args.length < 1) {
 
@@ -22,7 +24,7 @@ public class Main {
             return;
         }
 
-        PrankGenerator prank = new PrankGenerator(numberOfPranks,3);
+        PrankGenerator prank = new PrankGenerator(numberOfPranks,3,victims_email,messages_email);
         prank.generateAndSendPranks();
     }
 }

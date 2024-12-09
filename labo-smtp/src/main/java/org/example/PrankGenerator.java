@@ -3,8 +3,8 @@ package org.example;
 import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
-
-import static org.example.json_reader.readJsonFile;
+import org.json.*;
+import static org.example.json_reader.*;
 
 /**
  * Classe responsable de la génération et de l'envoi d'emails de farce
@@ -16,8 +16,7 @@ public class PrankGenerator {
     private SmtpClient smtpClient;
     private int nbGroupe;
     private int nbAddrMail;
-    private final String victims_email="files/email.json";
-    private final String messages_email="files/fishing_messages.json";
+
 
     /**
      * Constructeur de PrankGenerator
@@ -25,7 +24,7 @@ public class PrankGenerator {
      * @param nbAddrMail Nombre d'adresses email par groupe
      * @throws IOException En cas d'erreur lors de la lecture des fichiers d'email ou de messages
      */
-    public PrankGenerator(int nbgroupe, int nbAddrMail) throws IOException {
+    public PrankGenerator(int nbgroupe, int nbAddrMail, String victims_email, String messages_email) throws IOException {
         if(checkEmailFormat(readJsonFile(victims_email,"emails")))
         {
             //liste tout les mail
