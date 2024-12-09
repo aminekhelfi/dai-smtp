@@ -56,7 +56,7 @@ public class SmtpClient {
             out.write("ehlo " + smtpServer + "\n");
             out.flush();
             String r;
-            while ((r = in.readLine()) != null && r.contains("r")) {
+            while ((r = in.readLine()) != null && r.contains("250-")) {
                 System.out.println("Serveur : " + r);
             }
             out.write("mail from:" + "<" + sender + ">" + "\n");
