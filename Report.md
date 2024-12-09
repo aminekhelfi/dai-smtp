@@ -33,10 +33,13 @@ Configuration et Exécution de l'Outil
 
 `files/fishing_messages.json` : Contient les messages électroniques (objet et corps).
 
-**3. Compiler et exécuter le programme :**
+**3. Compiler et exécuter le programme avec Maven :**
 
-       javac -d bin src/org/example/*.java
-       java -cp bin org.example.Main <nombre_de_groupes>
+       mvn clean package
+       java -jar <NOM.jar>
+
+Le pom.xml doit être configuré. Executer la commande `mvn clean package` là où se trouve le pom.xml.
+En suite, un dossier `target` sera créer, et c'est là que doit être executé la commande `java -jar <NOM.jar>`.
 
 
 Description de l'Implémentation
