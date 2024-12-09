@@ -100,10 +100,8 @@ public class SmtpClient {
                 System.out.println("Serveur : " + in.readLine());
                 out.write("From:" + "<" + sender + ">" + "\n");
                 out.flush();
-                for(int i = 0; i <recipients.size(); i++) {
-                    out.write("To:" + "<" + recipients.get(i) + ">" + "\n");
-                    out.flush();
-                }
+                out.write("To: you <>" + "\n");
+                out.flush();
                 out.write("Date:" + getActualDate() + "\n");
                 out.flush();
                 out.write("Content-Type: text/plain; charset=UTF-8\r\n");
