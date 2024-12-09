@@ -106,11 +106,11 @@ public class SmtpClient {
                 out.flush();
                 out.write("Content-Type: text/plain; charset=UTF-8\r\n");
                 out.flush();
-                out.write("Subject:" + message.get(0) + "\r\n");
+                out.write("Subject:" + message.getFirst() + "\r\n");
                 out.flush();
                 out.write("\n");
                 out.flush();
-                out.write(message.get(message.size()-1) + "\n");
+                out.write(message.getLast() + "\n");
                 out.flush();
                 out.write(" \n");
                 out.flush();
