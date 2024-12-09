@@ -36,7 +36,7 @@ Configuration et Exécution de l'Outil
 **3. Compiler et exécuter le programme avec Maven :**
 
        mvn clean package
-       cd ./target
+       cd .\target
        java -jar <NOM.jar> <NombreGroupe>
 
 Le pom.xml doit être configuré. Executer la commande `mvn clean package` là où se trouve le pom.xml.
