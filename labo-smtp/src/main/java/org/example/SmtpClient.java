@@ -13,8 +13,8 @@ import java.time.format.DateTimeFormatter;
  * Gère la connexion au serveur SMTP et l'envoi des messages
  */
 public class SmtpClient {
-    private String smtpServer;
-    private int port;
+    private final String smtpServer;
+    private final int port;
 
     /**
      * Constructeur du client SMTP
